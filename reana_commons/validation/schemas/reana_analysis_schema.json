@@ -46,6 +46,18 @@
             "title": "Relative path to the directory."
           }
         },
+        "rucio_dids": {
+          "id": "/properties/inputs/properties/rucio_dids",
+          "type": "array",
+          "title": "Analysis input Rucio DIDs.",
+          "description": "List of Rucio DIDs provided as input for a given analysis.",
+          "optional": true,
+          "items": {
+            "id": "/properties/inputs/properties/rucio_dids/items",
+            "type": "string",
+            "title": "DID."
+          }
+        },
         "parameters": {
           "id": "/properties/inputs/properties/parameters",
           "type": "object",
