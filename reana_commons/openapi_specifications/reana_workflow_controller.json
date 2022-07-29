@@ -1232,7 +1232,9 @@
           }
         },
         "summary": "Returns the workspace file list."
-      },
+      }
+    },
+    "/api/workflows/{workflow_id_or_name}/workspace/file": {
       "post": {
         "consumes": [
           "application/octet-stream"
@@ -1315,6 +1317,89 @@
           }
         },
         "summary": "Adds a file to the workspace."
+      }
+    },
+    "/api/workflows/{workflow_id_or_name}/workspace/rucio": {
+      "post": {
+        "consumes": [
+          "application/octet-stream"
+        ],
+        "description": "This resource is expecting Rucio DID(s) to place in the workspace.",
+        "operationId": "fetch_rucio_files",
+        "parameters": [
+          {
+            "description": "Required. UUID of workflow owner.",
+            "in": "query",
+            "name": "user",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "Required. Workflow UUID or name.",
+            "in": "path",
+            "name": "workflow_id_or_name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "Required. Rucio DID(s) of files to add to the workspace.",
+            "in": "body",
+            "name": "rucio_dids",
+            "required": true,
+            "schema": {
+              "description": "List Rucio DIDs.",
+              "items": {
+                "description": "Rucio DID",
+                "type": "string"
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Request succeeded. Rucio DIDs successfully fetched.",
+            "examples": {
+              "application/json": {
+                "message": "DID(s) has been successfully fetched."
+              }
+            },
+            "schema": {
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Request failed. The incoming payload specification seems malformed"
+          },
+          "404": {
+            "description": "Request failed. Workflow does not exist.",
+            "examples": {
+              "application/json": {
+                "message": "Workflow cdcf48b1-c2f3-4693-8230-b066e088c6ac does not exist"
+              }
+            },
+            "schema": {
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "500": {
+            "description": "Request failed. Internal controller error."
+          }
+        },
+        "summary": "Fetches Rucio files to the workspace."
       }
     },
     "/api/workflows/{workflow_id_or_name}/workspace/{file_name}": {
